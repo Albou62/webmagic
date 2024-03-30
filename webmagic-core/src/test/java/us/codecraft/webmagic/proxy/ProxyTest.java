@@ -2,6 +2,8 @@ package us.codecraft.webmagic.proxy;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -93,5 +95,46 @@ public class ProxyTest {
         assertEquals("//username@127.0.0.1:8080", new Proxy("127.0.0.1", 8080, "username", null).toString());
         assertEquals("//:password@127.0.0.1:8080", new Proxy("127.0.0.1", 8080, null, "password").toString());
     }
+
+    @Test
+    public void testEquals(){
+        String otherObject = "//127.0.0.1:8080";
+        Proxy proxyInit =  new Proxy("127.0.0.1", 8080, "username", "password");
+        Proxy proxyInitCpy =  new Proxy("127.0.0.1", 8080, "username", "password");
+
+        //Test equals with the same object
+        assertTrue(proxyInit.equals(proxyInit));
+        //Test with identical Proxy
+        assertTrue((proxyInit.equals(proxyInitCpy)));
+        //Test equals with an object with other type
+        assertFalse(proxyInit.equals(otherObject));
+
+        //Test equals with a different port
+        Proxy pWDPort = new Proxy("127.0.0.1", 8000, "username", "password");
+        assertFalse(proxyInit.equals(pWDPort));
+
+        //Test equals with username and password are null
+        Proxy pWithoutUsernameAndPassWord = new Proxy("127.0.0.1", 8080);
+        assertFalse(proxyInit.equals(pWithoutUsernameAndPassWord));
+
+        //Test equals with different username
+        Proxy pWDUsername = new Proxy("127.0.0.1", 8080, "patrick", "password");
+        assertFalse(proxyInit.equals(pWDUsername));
+
+        //Test equals with different password
+        Proxy pWDPassword = new Proxy("127.0.0.1", 8080, "username", "pass");
+        assertFalse(proxyInit.equals(pWDPassword));
+
+        //Test equals with different scheme and scheme is null
+        proxyInit.setScheme("scheme");
+        assertFalse(proxyInit.equals(proxyInitCpy));
+        proxyInitCpy.setScheme("sc");
+        assertFalse(proxyInit.equals(proxyInitCpy));
+        proxyInitCpy.setScheme("scheme");
+        assertTrue((proxyInit.equals(proxyInitCpy)));
+
+
+    }
+
 
 }
