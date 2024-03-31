@@ -5,6 +5,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -111,10 +112,11 @@ public class Proxy {
         Proxy proxy = (Proxy) o;
 
         if (port != proxy.port) return false;
+        //Voir avec Mme Etien pour l'host qui peut pas être null
         if (host != null ? !host.equals(proxy.host) : proxy.host != null) return false;
-        if (scheme != null ? !scheme.equals(proxy.scheme) : proxy.scheme != null) return false;
-        if (username != null ? !username.equals(proxy.username) : proxy.username != null) return false;
-        return password != null ? password.equals(proxy.password) : proxy.password == null;
+        if (!Objects.equals(scheme, proxy.scheme)) return false;
+        if (!Objects.equals(username, proxy.username)) return false;
+        return Objects.equals(password, proxy.password);
     }
 
     @Override
