@@ -112,7 +112,6 @@ public class Proxy {
         Proxy proxy = (Proxy) o;
 
         if (port != proxy.port) return false;
-        //Voir avec Mme Etien pour l'host qui peut pas être null
         if (!Objects.equals(host, proxy.host)) return false;
         if (!Objects.equals(scheme, proxy.scheme)) return false;
         if (!Objects.equals(username, proxy.username)) return false;
