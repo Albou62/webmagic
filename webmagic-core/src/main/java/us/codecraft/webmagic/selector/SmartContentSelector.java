@@ -51,31 +51,28 @@ public class SmartContentSelector implements Selector {
         text.setLength(0);
 
         for (int i = 0; i < indexDistribution.size() - 1; i++) {
-            if (indexDistribution.get(i) > threshold && ! boolstart) {
-                if (indexDistribution.get(i+1).intValue() != 0
+            if (indexDistribution.get(i) > threshold && ! boolstart &&
+                    (indexDistribution.get(i+1).intValue() != 0
                         || indexDistribution.get(i+2).intValue() != 0
-                        || indexDistribution.get(i+3).intValue() != 0) {
-                    boolstart = true;
-                    start = i;
-                    continue;
-                }
+                        || indexDistribution.get(i+3).intValue() != 0 )) {
+                boolstart = true;
+                start = i;
+                continue;
             }
-            if (boolstart) {
-                if (indexDistribution.get(i).intValue() == 0
-                        || indexDistribution.get(i+1).intValue() == 0) {
-                    end = i;
-                    boolend = true;
-                }
+            if (boolstart  &&
+                (indexDistribution.get(i).intValue() == 0
+                    || indexDistribution.get(i+1).intValue() == 0)){
+                end = i;
+                boolend = true;
+
             }
             StringBuilder tmp = new StringBuilder();
             if (boolend) {
-                //System.out.println(start+1 + "\t\t" + end+1);
                 for (int ii = start; ii <= end; ii++) {
                     if (lines.get(ii).length() < 5) continue;
                     tmp.append(lines.get(ii) + "\n");
                 }
                 String str = tmp.toString();
-                //System.out.println(str);
                 if (str.contains("Copyright")   ) continue;
                 text.append(str);
                 boolstart = boolend = false;
