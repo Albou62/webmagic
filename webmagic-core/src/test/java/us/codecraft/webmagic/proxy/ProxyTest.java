@@ -117,6 +117,10 @@ public class ProxyTest {
         Proxy pWithoutUsernameAndPassWord = new Proxy("127.0.0.1", 8080);
         assertFalse(proxyInit.equals(pWithoutUsernameAndPassWord));
 
+        //Test with different host
+        Proxy pWDHost = new Proxy("127.0.0.15", 8080, "username", "password");
+        assertFalse(proxyInit.equals(pWDHost));
+
         //Test equals with different username
         Proxy pWDUsername = new Proxy("127.0.0.1", 8080, "patrick", "password");
         assertFalse(proxyInit.equals(pWDUsername));
@@ -132,6 +136,7 @@ public class ProxyTest {
         assertFalse(proxyInit.equals(proxyInitCpy));
         proxyInitCpy.setScheme("scheme");
         assertTrue((proxyInit.equals(proxyInitCpy)));
+
 
 
     }
