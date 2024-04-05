@@ -41,7 +41,7 @@ public abstract class CharsetUtils {
                 // 2.1、html4.01 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
                 String metaContent = link.attr("content");
                 String metaCharset = link.attr("charset");
-                if (metaContent.indexOf("charset") != -1) {
+                if (metaContent.contains("charset")) {
                     metaContent = metaContent.substring(metaContent.indexOf("charset"), metaContent.length());
                     charset = metaContent.split("=")[1];
                     break;
